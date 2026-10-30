@@ -1,0 +1,10 @@
+{
+  "source": "myreach-top/myreach-web",
+  "commit": "89961055b6eda73941a666c0e88e060f9e362cd6",
+  "dirty": true,
+  "visibility": "private",
+  "candidateOnly": true,
+  "files": {
+    "openapi.json": "9739c85d37e4f231b6114f26f5ee3c9dc81127340fb0705451066a9906106c79"
+  }
+}
