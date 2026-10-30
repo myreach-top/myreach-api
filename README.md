@@ -1,6 +1,6 @@
 # MyReach API contract
 
-Private, generated contract export from myreach-top/myreach-web.
+Generated contract export from the private myreach-top/myreach-web application.
 
 - [API reference](https://myreach.top/ai-agents)
 - [Agent guide](https://myreach.top/ai-agents-guide)
@@ -12,3 +12,4 @@ Contact: hello@myreach.top
 
 Regenerate in the application source with npm run package:integrations.
 This development candidate may differ from the currently deployed contract.
+Application backend source is excluded and remains private.
