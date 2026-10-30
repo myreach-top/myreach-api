@@ -4,6 +4,7 @@
   "dirty": true,
   "visibility": "private",
   "candidateOnly": true,
+  "generatorSha256": "47202cc269e476dde143bb99040d5cb0312e344c03f642e200066c12324eb66d",
   "files": {
     "openapi.json": "9739c85d37e4f231b6114f26f5ee3c9dc81127340fb0705451066a9906106c79"
   }
