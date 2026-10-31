@@ -233,7 +233,7 @@
           "Agent provisioning"
         ],
         "summary": "Claim and publish the reviewed revision after owner verification",
-        "description": "Use the existing /login?claim=... screen. Requires an mr_session for the exact intended email authenticated with email code, magic link or verified Google email. Password sessions and API keys cannot claim. Owner must explicitly confirm. Normal account page limit applies. Confirmation is idempotent, makes the page permanent, and revokes the provisioning key. A new intended owner can complete claim sign-in even while general signup is waitlisted; the token alone never signs anyone in. The browser offers Link existing account and Create account and claim. New accounts are created only after verified sign-in with the account=new claim return path; confirmation links the already-built page and skips page creation onboarding. Accepts at most 8 KB, including chunked requests. Public content stays unavailable until this confirmation. Include expectedRevision from the current GET claim response. A stale revision returns 412; missing revision returns 428. Claim tokens permit status inspection after claim but never ongoing editing.",
+        "description": "Use the existing /login?claim=... screen. Requires an mr_session for the exact intended email authenticated with email code, magic link or verified Google email. Password sessions and API keys cannot claim. Owner must explicitly confirm. Normal account page limit applies. Confirmation is idempotent, makes the page permanent, and revokes the provisioning key. A new intended owner can complete claim sign-in even while general signup is waitlisted; the token alone never signs anyone in. The claim screen verifies the intended owner email and automatically creates an account if needed or retains the existing account; no new/existing account choice or separate signup is required. Legacy account=new/account=existing claim return paths remain accepted. Confirmation links the already-built page and skips page creation onboarding. Free accounts allow one page; active Pro accounts allow three. A full account gets a 403 account_page_limit_reached error, and the unclaimed draft stays private. Accepts at most 8 KB, including chunked requests. Public content stays unavailable until this confirmation. Include expectedRevision from the current GET claim response. A stale revision returns 412; missing revision returns 428. Claim tokens permit status inspection after claim but never ongoing editing.",
         "security": [
           {
             "session": []
@@ -282,7 +282,43 @@
             "description": "Owner login required."
           },
           "403": {
-            "description": "Wrong owner, unverified sign-in, account page cap or cross-origin request."
+            "description": "Wrong owner, unverified sign-in, account page cap or cross-origin request.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "error": {
+                      "type": "string"
+                    },
+                    "code": {
+                      "type": "string",
+                      "enum": [
+                        "account_page_limit_reached"
+                      ],
+                      "description": "Present for an account page-cap failure."
+                    },
+                    "pageLimit": {
+                      "type": "integer",
+                      "enum": [
+                        1,
+                        3
+                      ]
+                    },
+                    "pageCount": {
+                      "type": "integer",
+                      "minimum": 1
+                    },
+                    "upgrade": {
+                      "type": "boolean"
+                    }
+                  },
+                  "required": [
+                    "error"
+                  ]
+                }
+              }
+            }
           },
           "404": {
             "description": "Invalid, deleted or expired claim."
